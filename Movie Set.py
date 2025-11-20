@@ -54,3 +54,10 @@ print(df['first_genre'])
 print("\n")
 df['decade'] = df['release_date'] #The New column decade wich is based on the release_date got created
 print(df['decade'])
+
+def top_n_by_profit(df,profit,name):
+    return df[[name,profit]].nlargest(10,profit)
+print("")
+print("\n",top_n_by_profit(df,'profit','title'))
+
+
