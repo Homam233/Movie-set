@@ -38,7 +38,7 @@ df["return_ratio"] = df.apply(
     else np.nan, # Wenn das x[budget] kleiner als null ist None(dasselbe wie null)
     axis=1
 )
-print("/////")
+print("\n")
 
 #Aufgabe 2:
 
@@ -46,8 +46,11 @@ df['profit_level'] = df['profit'].apply(
    lambda x: 'niedrig' if x <1 else 'mittel' if x <= 2 else 'hoch' # X mit vielen if müssen mit else abgeschlossen werden um das nächste if zu starten
 )
 print(df['profit_level'])
-
+print("\n")
 df['first_genre'] = df['genres'].apply(
     lambda x: x[0] if isinstance(x,list) and len(x) > 0  else None # with isinstance we can proof the data type, also we check the line if there is a genre he shows it but if none we get nothing back
 )
-print(df)
+print(df['first_genre'])
+print("\n")
+df['decade'] = df['release_date'] #The New column decade wich is based on the release_date got created
+print(df['decade'])
