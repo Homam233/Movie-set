@@ -12,16 +12,14 @@ print(df.head())
 print("\nSpaltennamen:")
 print(df.columns)
 
-print("\nFehlende Werte pro Spalte:")
-print(df.isna().sum())
 
-### Hausaufgabe Repositary im Github und dieses Projekt mit github verbinden und aufgabe 1.1 und 1.2 lösen
+df = df.drop(['belongs_to_collection','homepage','tagline','popularity'],axis=1 ) #Column with a lot of missing values got deleted
+print("\nFehlende Werte pro Spalte:")
+print(df.isna().sum()) #The missing lines per column were summed
+
+
 # Aufgabe 1 – Daten bereinigen
 
-
-# Spalten mit > 50 % fehlenden Werten entfernen
-limit = len(df) * 0.5
-df = df.dropna(thresh=limit, axis=1)
 
 #Aufgabe 1:
 # budget & revenue in numerische Werte umwandeln
@@ -45,8 +43,11 @@ print("/////")
 #Aufgabe 2:
 
 df['profit_level'] = df['profit'].apply(
-   lambda x: 'niedrig' if x <1 else 'mittel' if x <=2 else 'hoch' # X mit vielen if müssen mit else abgeschlossen werden um das nächste if zu starten
+   lambda x: 'niedrig' if x <1 else 'mittel' if x <= 2 else 'hoch' # X mit vielen if müssen mit else abgeschlossen werden um das nächste if zu starten
 )
 print(df['profit_level'])
 
-#Error überprüfen
+df['first_genre'] = df['genres'].apply(
+    lambda x: x[0] if isinstance(x,list) and len(x) > 0  else None # with isinstance we can proof the data type, also we check the line if there is a genre he shows it but if none we get nothing back
+)
+print(df)
