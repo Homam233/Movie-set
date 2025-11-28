@@ -60,4 +60,35 @@ def top_n_by_profit(df,profit,name):
 print("")
 print("\n",top_n_by_profit(df,'profit','title'))
 
+def average_rating_by_genre(df,name,value):
+    return df.groupby([name], as_index=False)[value].mean()
+print(average_rating_by_genre(df,'genres','revenue'))
+
+class Movie:
+    def __init__(self,df,title, release_year, budget, revenue, genres, profit,return_ratio):
+        self.df = df
+        self.title = title
+        self.release_year = release_year
+        self.budget = budget
+        self.revenue = revenue
+        self.genres = genres
+        self.profit = profit
+        self.return_ratio = return_ratio
+
+    def blockbuster(self):
+        x = []
+        for i in range(len(self.df['return_ratio'])):
+            if self.df['return_ratio'][i] > 5:
+                x.append(self.df['return_ratio'])
+
+            else:
+                None
+        return x
+
+
+    def summary(self):
+        return self.df.info(), self.df.dtypes
+
+print('\n')
+
 
