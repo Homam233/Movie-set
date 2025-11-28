@@ -52,7 +52,7 @@ df['first_genre'] = df['genres'].apply(
 )
 print(df['first_genre'])
 print("\n")
-df['decade'] = df['release_date'] #The New column decade wich is based on the release_date got created
+df['decade'] = (df['release_date'] //10)*10 #The New column decade wich is based on the release_date got created
 print(df['decade'])
 
 def top_n_by_profit(df,profit,name):
