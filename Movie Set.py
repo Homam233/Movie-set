@@ -52,8 +52,28 @@ df['first_genre'] = df['genres'].apply(
 )
 print(df['first_genre'])
 print("\n")
-df['decade'] = (df['release_date'] //10)*10 #The New column decade wich is based on the release_date got created
-print(df['decade'])
+# Source - https://stackoverflow.com/a
+# Posted by chrisb, modified by community. See post 'Timeline' for change history
+# Retrieved 2025-11-28, License - CC BY-SA 4.0
+
+#df['release_date'] = pd.to_datetime(df['release_date'],format="%Y-%m-%d")
+df['release_date'] = df['release_date'].fillna(value='2011-11-10')
+g = df[(df['release_date'].str.contains('10395'))]
+
+
+i = df.index[df['release_date'] == '2011-11-10'].tolist()
+print(i)
+
+
+#print(g)
+print("\n")
+
+print(df['release_date'].isnull().sum())
+print("Homam")
+
+#df['decade'] = (df['release_date'] // 10)*10 #The New column decade wich is based on the release_date got created
+#print(df['decade'])
+
 
 def top_n_by_profit(df,profit,name):
     return df[[name,profit]].nlargest(10,profit)
@@ -90,5 +110,34 @@ class Movie:
         return self.df.info(), self.df.dtypes
 
 print('\n')
+
+class MovieAnalyzer:
+    def __init__(self,df):
+        self.df = df
+
+    def top_profits(self,name,profit):
+        return df[[name,profit]].nlargest(10,profit)
+
+    def rating_by_decade(self):
+        return None
+    def plot_budget_vs_revenue(self):
+        return None
+
+
+
+
+
+
+m = MovieAnalyzer
+
+x = m.top_profits(df, 'title', 'profit')
+print(x)
+
+print(df.dtypes)
+print(df['release_date'])
+
+
+
+
 
 
