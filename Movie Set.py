@@ -135,6 +135,12 @@ print(df['release_date'])
 chosen_columns = ['title','release_date','profit'] # Ausgesuchten spalten in rheinfolge
 existing_cols = [col for col in chosen_columns if col in df.columns] #fügt spalten in der gewünschten Rheienfolge in chosen_columns
 print(df[existing_cols])
+i = 0
+while i < len(df['return_ratio']):
+    i += 1
+    print((df['return_ratio']))
+    break
+
 
 
 
