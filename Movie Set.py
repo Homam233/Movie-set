@@ -124,10 +124,6 @@ class MovieAnalyzer:
         return None
 
 
-
-
-
-
 m = MovieAnalyzer
 
 x = m.top_profits(df, 'title', 'profit')
@@ -136,6 +132,10 @@ print(x)
 print(df.dtypes)
 print(df['release_date'])
 
+chosen_columns = ['title','release_date','profit']
+
+existing_cols = [col for col in chosen_columns if col in df.columns]
+print(df[existing_cols].head())
 
 
 
