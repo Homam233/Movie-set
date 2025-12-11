@@ -111,6 +111,8 @@ class Movie:
 
 print('\n')
 print("............")
+print(df['release_date'])
+print(df.isnull().sum())
 class MovieAnalyzer:
     def __init__(self,df):
         self.df = df
@@ -125,15 +127,14 @@ class MovieAnalyzer:
         df[year_col] = pd.to_numeric(df[year_col], errors="coerce")
 
         # Zeilen ohne gültiges Jahr entfernen
-        df = df.dropna(subset=[year_col])
+        #df = df.dropna(subset=[year_col])
+
+        df = df[year_col].fillna(value=max(df[year_col]))
 
         df["decade"] = (df[year_col] // 10) * 10
         return df.groupby("decade")[rating_col].mean().reset_index()
 
     def plot_budget_vs_revenue(self, budget_col="budget", revenue_col="revenue"):
-        """
-        Zeichnet ein Scatter-Plot Budget vs Revenue.
-        """
 
         # Eine neue Zeichenfläche (Figure) erstellen, damit das Diagramm die richtige Größe hat
         plt.figure(figsize=(8, 5))
@@ -167,7 +168,7 @@ g = m.rating_by_decade('release_date','vote_average')
 
 k = m.plot_budget_vs_revenue()
 print(x,g,k)
-print("######")
+print("############")
 print(df.dtypes)
 print(df['release_date'])
 
@@ -182,6 +183,9 @@ while i < len(df['return_ratio']):
     i += 1
     print((df['return_ratio']))
     break
+
+
+
 
 
 
