@@ -110,7 +110,7 @@ class Movie:
         return self.df.info(), self.df.dtypes
 
 print('\n')
-
+print("............")
 class MovieAnalyzer:
     def __init__(self,df):
         self.df = df
@@ -118,28 +118,72 @@ class MovieAnalyzer:
     def top_profits(self,name,profit):
         return df[[name,profit]].nlargest(10,profit)
 
-    def rating_by_decade(self):
-        return None
-    def plot_budget_vs_revenue(self):
-        return None
+    def rating_by_decade(self, year_col, rating_col):
+        df = self.df.copy()
+
+        # Jahr sicher in Integer umwandeln
+        df[year_col] = pd.to_numeric(df[year_col], errors="coerce")
+
+        # Zeilen ohne gültiges Jahr entfernen
+        df = df.dropna(subset=[year_col])
+
+        df["decade"] = (df[year_col] // 10) * 10
+        return df.groupby("decade")[rating_col].mean().reset_index()
+
+    def plot_budget_vs_revenue(self, budget_col="budget", revenue_col="revenue"):
+        """
+        Zeichnet ein Scatter-Plot Budget vs Revenue.
+        """
+
+        # Eine neue Zeichenfläche (Figure) erstellen, damit das Diagramm die richtige Größe hat
+        plt.figure(figsize=(8, 5))
+
+        # Scatter-Plot zeichnen: X = Budget, Y = Revenue
+        # self.df[...] greift auf die jeweilige Spalte im DataFrame zu
+        plt.scatter(self.df[budget_col], self.df[revenue_col])
+
+        # Beschriftung der x-Achse
+        plt.xlabel("Budget")
+
+        # Beschriftung der y-Achse
+        plt.ylabel("Revenue")
+
+        # Titel des Diagramms
+        plt.title("Budget vs Revenue")
+
+        # Hintergrund-Gitterlinien für bessere Lesbarkeit einschalten
+        plt.grid(True)
+
+        # Diagramm anzeigen
+        plt.show()
+        # End resultat zeigt an wie viel im Film investiert wurde und wie hoch der Umsatz war
 
 
-m = MovieAnalyzer
+m = MovieAnalyzer(df)
 
-x = m.top_profits(df, 'title', 'profit')
-print(x)
+x = m.top_profits('title', 'profit')
 
+g = m.rating_by_decade('release_date','vote_average')
+
+k = m.plot_budget_vs_revenue()
+print(x,g,k)
+print("######")
 print(df.dtypes)
 print(df['release_date'])
 
 chosen_columns = ['title','release_date','profit'] # Ausgesuchten spalten in rheinfolge
 existing_cols = [col for col in chosen_columns if col in df.columns] #fügt spalten in der gewünschten Rheienfolge in chosen_columns
 print(df[existing_cols])
+
+print("************")
+
 i = 0
 while i < len(df['return_ratio']):
     i += 1
     print((df['return_ratio']))
     break
+
+
 
 
 
