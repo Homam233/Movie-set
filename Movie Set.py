@@ -211,6 +211,10 @@ avg_imdb_genre = df.groupby("first_genre")["vote_average"].mean()
 print("\nDurchschnittlicher IMDb-Score pro Genre:")
 print(avg_imdb_genre)
 
+# Decade-Spalte global erzeugen (notwendig für Boxplot)
+df['release_year'] = pd.to_numeric(df['release_date'].str[:4], errors='coerce')
+df['release_year'] = df['release_year'].fillna(df['release_year'].median())
+df['decade'] = (df['release_year'] // 10) * 10
 
 # =====================================================
 # Aufgabe 7 – Visualisierungen
@@ -232,6 +236,7 @@ sns.scatterplot(x=df["budget"], y=df["revenue"], alpha=0.5)
 plt.title("Budget vs Revenue")
 plt.xlabel("Budget")
 plt.ylabel("Revenue")
+# Shows how successful the Film got
 plt.show()
 
 # Boxplot Profit pro Decade
