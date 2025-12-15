@@ -11,6 +11,7 @@ df = pd.read_csv(
     "C:/Users/homam/Downloads/movies_metadata.csv.zip",
     low_memory=False
 )
+# With low memory he reads every column type and tells at the end if a type or value is unknown 
 
 print("Erste 5 Zeilen:")
 print(df.head())
@@ -228,7 +229,7 @@ sns.histplot(df["return_ratio"], bins=30, kde=True)
 plt.title("Histogramm des Return Ratio")
 plt.xlabel("Return Ratio")
 plt.ylabel("Häufigkeit")
-plt.show()
+#plt.show()
 
 # Scatterplot Budget vs Revenue
 plt.figure(figsize=(8, 5))
@@ -237,7 +238,7 @@ plt.title("Budget vs Revenue")
 plt.xlabel("Budget")
 plt.ylabel("Revenue")
 # Shows how successful the Film got
-plt.show()
+#plt.show()
 
 # Boxplot Profit pro Decade
 plt.figure(figsize=(10, 5))
@@ -245,7 +246,7 @@ sns.boxplot(data=df, x="decade", y="profit")
 plt.title("Profit pro Decade")
 plt.xlabel("Decade")
 plt.ylabel("Profit")
-plt.show()
+#plt.show()
 
 # Countplot profit_level
 plt.figure(figsize=(6, 4))
@@ -253,7 +254,7 @@ sns.countplot(data=df, x="profit_level")
 plt.title("Anzahl Filme pro Profit Level")
 plt.xlabel("Profit Level")
 plt.ylabel("Anzahl Filme")
-plt.show()
+#plt.show()
 
 # Heatmap Korrelationen
 corr_cols = ["budget", "revenue", "profit", "return_ratio", "vote_count"]
@@ -262,9 +263,14 @@ corr_matrix = df[corr_cols].corr()
 plt.figure(figsize=(8, 6))
 sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f")
 plt.title("Korrelations-Heatmap")
-plt.show()
+#plt.show()
 
 
+print(df['title'].nunique())
+ids = df['title']
+print(df[ids.isin(ids[ids.duplicated()])].to_string())
+
+df.to_excel('C:/Users/homam/Downloads/Dataframe-Movie.xlsx')
 
 
 
